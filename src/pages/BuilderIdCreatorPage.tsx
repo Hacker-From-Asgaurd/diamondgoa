@@ -131,7 +131,7 @@ export const BuilderIdCreatorPage: React.FC = () => {
                     <input
                       ref={fileInputRef}
                       type="file"
-                      accept="image/jpeg,image/jpg,image/png,image/heic,image/heif,image/x-heic,image/heic-sequence,image/heif-sequence,.jpg,.jpeg,.png,.heic,.heif,.HEIC,.HEIF"
+                      accept="image/jpeg,image/jpg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
                       className="hidden"
                       onChange={handlePhotoUpload}
                     />
