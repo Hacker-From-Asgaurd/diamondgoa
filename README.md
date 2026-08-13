@@ -1,139 +1,261 @@
-# 🌴 HH Goa 2026 – Builder Identity Generator & PFP Studio
+# 🌴 HH Goa 2026 --- Builder Identity Studio
 
-An interactive web application built for **Hacker House Goa 2026**. This tool enables hackers, developers, and creators to design personalized event badges, customize social media profile frames (PFP), and instantly share their builder identity on X (Twitter) using `#FrameInGoa`.
+> **Create your builder identity. Frame your profile. Share your
+> build.**
 
----
+HH Goa 2026 --- Builder Identity Studio is an interactive web experience
+created for **Hacker House Goa 2026**. It lets builders turn a profile
+photo and a few details into a personalized **Builder ID** and **PFP
+frame**, then export and share the result.
 
-## ✨ Features
+**Live Demo:** https://diamondgoa.vercel.app/\
+**Repository:** https://github.com/Hacker-From-Asgaurd/diamondgoa
 
-- 📸 **Instant Multi-Format Photo Upload**: Upload your profile picture in `PNG`, `JPG`, `WEBP`, or iPhone `HEIC` formats.
-- ⚡ **Seamless HEIC Processing**: Silent background conversion for iPhone HEIC images with instant 0ms preview feedback.
-- 📷 **Live Device Camera Integration**: Capture profile pictures directly using laptop or mobile webcams with a live preview modal.
-- 🖼️ **Interactive PFP Frame Studio**: Fine-tune your profile image with zoom, scale, and pan controls to fit perfectly within the HH Goa 2026 frame.
-- 🆔 **Builder ID Customization**:
-  - **Builder Classes**: Choose preset classes like *Terminal Wizard*, *Solana Degen*, *Full Stack Phantom*, *AI Overlord*, *Rust Evangelist*, or enter a custom class.
-  - **Tech Stack & Bio**: Showcase your top tools and skills.
-- ⬇️ **High-Resolution HD Export**: Render high-density (2000x2000) PNG graphics using HTML5 Canvas.
-- 🚀 **One-Click X (Twitter) Sharing**: Automatically generate X post text with pre-filled hashtags (`#FrameInGoa`, `#HHGoa2026`) and direct image download.
-- 📱 **Mobile & Desktop Optimized**: Fully responsive layout designed with a sleek dark-green theme (`#03502E`, `#023D23`, `#FFE600`).
+------------------------------------------------------------------------
 
----
+## 🎯 What is this?
+
+Hackathon and builder communities are full of talented people, but their
+online identities are often disconnected from the event experience.
+
+This project creates a simple identity layer for HH Goa:
+
+**Upload / Capture Photo → Build Your Identity → Customize → Generate →
+Share**
+
+The goal is not to make another generic profile-card generator. It is to
+give participants a recognizable visual identity they can actually use
+during and after the event.
+
+------------------------------------------------------------------------
+
+## ✨ Key Features
+
+### 📸 Flexible Photo Input
+
+-   Upload `PNG`, `JPG`, `WEBP`, and iPhone `HEIC` images.
+-   Capture a profile photo directly through the device camera.
+-   Handle image preparation in the browser before rendering.
+
+### 🆔 Builder ID Creator
+
+Create a personalized builder identity with: - Builder name / identity
+details - Builder class - Tech stack - Short bio - Custom identity
+information
+
+Preset builder classes include: - Terminal Wizard - Solana Degen - Full
+Stack Phantom - AI Overlord - Rust Evangelist - Custom class
+
+### 🖼️ PFP Frame Studio
+
+Fine-tune your profile image using: - Zoom - Scale - Pan / positioning -
+Live preview
+
+### 🎨 High-Resolution Export
+
+Generated graphics are rendered through **HTML5 Canvas** and exported as
+high-resolution PNG images at a 2000 × 2000 canvas size.
+
+### 🚀 Sharing
+
+The final identity can be downloaded and prepared for sharing on X with:
+`#FrameInGoa` · `#HHGoa2026` · `#HackerHouseGoa`
+
+### 📱 Responsive Experience
+
+The interface is designed for desktop and mobile screens while keeping
+the HH Goa visual identity consistent.
+
+------------------------------------------------------------------------
+
+## 🧭 User Flow
+
+``` text
+Landing Page
+     ↓
+Create Identity
+     ↓
+Choose Format
+   ↙     ↘
+Builder ID   PFP
+ Creator    Creator
+   ↘     ↙
+ Live Preview
+     ↓
+Download / Share on X
+```
+
+------------------------------------------------------------------------
 
 ## 🛠️ Tech Stack
 
-- **Framework**: [React 18](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
-- **Build Tool**: [Vite 6](https://vitejs.dev/)
-- **Routing**: [React Router v7](https://reactrouter.com/)
-- **Styling**: [Tailwind CSS v3](https://tailwindcss.com/)
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **Utilities**: `heic-to` (Background HEIC Image Conversion), `canvas-confetti` (Celebration Effects)
+  Layer              Technology
+  ------------------ -------------------
+  Frontend           React 18
+  Language           TypeScript
+  Build Tool         Vite 6
+  Routing            React Router v7
+  Styling            Tailwind CSS v3
+  Icons              Lucide React
+  Image Processing   `heic-to`
+  Rendering          HTML5 Canvas
+  Effects            `canvas-confetti`
+  Deployment         Vercel
 
----
+------------------------------------------------------------------------
 
-## 📁 Project Structure
+## 🏗️ Project Structure
 
-```text
-HH goa/
-├── public/                 # Static assets (frames, logos, overlays)
+``` text
+diamondgoa/
+├── public/                 # Static assets, frames, logos and overlays
 ├── src/
 │   ├── components/         # Reusable UI components
 │   │   ├── BackButton.tsx
-│   │   ├── CameraModal.tsx        # Live webcam capture modal
-│   │   ├── IdentityFormatCard.tsx # Badge preview selection card
-│   │   ├── LivePreview.tsx        # Canvas badge & PFP renderer
-│   │   ├── PfpFrameEditor.tsx     # Frame controls (zoom, pan, upload)
+│   │   ├── CameraModal.tsx
+│   │   ├── IdentityFormatCard.tsx
+│   │   ├── LivePreview.tsx
+│   │   ├── PfpFrameEditor.tsx
 │   │   └── StepIndicator.tsx
-│   ├── pages/              # Route views
-│   │   ├── HomePage.tsx           # Landing page
-│   │   ├── IdentityStudioPage.tsx # Format selection page
-│   │   ├── BuilderIdCreatorPage.tsx # Builder ID card creator
-│   │   ├── PfpCreatorPage.tsx     # PFP badge creator
-│   │   └── SharePage.tsx          # Download & X sharing page
+│   ├── pages/              # Route-level views
+│   │   ├── HomePage.tsx
+│   │   ├── IdentityStudioPage.tsx
+│   │   ├── BuilderIdCreatorPage.tsx
+│   │   ├── PfpCreatorPage.tsx
+│   │   └── SharePage.tsx
 │   ├── utils/              # Helper utilities
-│   │   ├── defaultData.ts         # Initial builder state
-│   │   ├── imageUtils.ts          # Downscaling & background HEIC processing
-│   │   └── shareHelpers.ts        # Canvas export & X sharing functions
-│   ├── App.tsx             # Application router & routes
-│   └── main.tsx            # Entry point
+│   │   ├── defaultData.ts
+│   │   ├── imageUtils.ts
+│   │   └── shareHelpers.ts
+│   ├── App.tsx
+│   └── main.tsx
 ├── package.json
 ├── tailwind.config.js
 ├── tsconfig.json
-├── vercel.json             # Vercel SPA routing configuration
+├── vercel.json
 └── vite.config.ts
 ```
 
----
+------------------------------------------------------------------------
 
-## 🚀 Getting Started
+## ⚙️ Getting Started
 
 ### Prerequisites
 
-Ensure you have [Node.js](https://nodejs.org/) (v18 or higher) and `npm` installed.
+-   **Node.js 18+**
+-   **npm**
 
 ### Installation
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/Hacker-From-Asgaurd/diamondgoa.git
-   cd diamondgoa
-   ```
-
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
-
-3. **Start the local development server**:
-   ```bash
-   npm run dev
-   ```
-
-4. Open your browser and navigate to `http://localhost:5173`.
-
----
-
-## 📦 Building for Production
-
-To create an optimized production build:
-
-```bash
-npm run build
+``` bash
+git clone https://github.com/Hacker-From-Asgaurd/diamondgoa.git
+cd diamondgoa
+npm install
+npm run dev
 ```
 
-To preview the production build locally:
+Open `http://localhost:5173` in your browser.
 
-```bash
+------------------------------------------------------------------------
+
+## 📦 Production Build
+
+``` bash
+npm run build
 npm run preview
 ```
 
----
+------------------------------------------------------------------------
 
 ## 🌐 Deployment
 
-This project is pre-configured for one-click deployment on [Vercel](https://vercel.com/) or [Netlify](https://www.netlify.com/).
+The project includes `vercel.json` for SPA route handling and is
+deployed on Vercel.
 
-### Deploying to Vercel
-The repository includes a `vercel.json` file configured for SPA route rewrites:
-```json
-{
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
-  ]
-}
+**Live Demo:** https://diamondgoa.vercel.app/
+
+------------------------------------------------------------------------
+
+## 🔧 Technical Highlights
+
+### Browser-side image processing
+
+Uploaded images are prepared in the browser, including HEIC conversion,
+before entering the identity creation flow.
+
+### Canvas-based rendering
+
+HTML5 Canvas controls: - Image positioning - Scaling - Frame overlays -
+Final export resolution
+
+### Interactive image positioning
+
+Users can control the position and scale of their profile image instead
+of being forced into a fixed crop.
+
+### Reusable React architecture
+
+Major UI pieces are separated into reusable components and route-level
+pages to keep the identity creation flow maintainable.
+
+------------------------------------------------------------------------
+
+## 🎨 Design System
+
+The visual system uses a dark Goa-inspired palette:
+
+``` text
+Primary Green: #03502E
+Dark Green:    #023D23
+Accent Yellow: #FFE600
 ```
-Simply connect your GitHub repository to Vercel and it will build and deploy automatically.
 
----
+The interface is intentionally event-focused rather than looking like a
+generic AI dashboard.
 
-## 🤝 Community & Hashtags
+------------------------------------------------------------------------
 
-When sharing your generated badge, tag your posts with:
-- `#FrameInGoa`
-- `#HHGoa2026`
-- `#HackerHouseGoa`
+## 📸 Screenshots
 
----
+Add real screenshots of the final product here.
 
-## 📜 License
+Recommended: 1. Landing page 2. Identity format selection 3. Builder ID
+creator 4. PFP frame editor 5. Final generated identity 6. Mobile
+responsive view
 
-Created for **Hacker House Goa 2026**. Open source for community builders.
+> Use screenshots from the running product rather than mockups. The
+> visual experience is one of the strongest parts of this project.
+
+------------------------------------------------------------------------
+
+## 🚀 Future Improvements
+
+-   Save and restore generated identities
+-   More event-specific identity formats
+-   Additional frame and builder-class variations
+-   Better social sharing previews
+-   QR-based identity/profile pages
+-   Optional public builder directory
+-   Analytics for identity creation and sharing
+-   Additional export formats
+
+------------------------------------------------------------------------
+
+## 🤝 Built for the Community
+
+Built for **Hacker House Goa 2026** around a simple idea:
+
+> **Builders should have an identity that feels as memorable as what
+> they build.**
+
+When sharing your generated identity:
+
+**#FrameInGoa · #HHGoa2026 · #HackerHouseGoa**
+
+------------------------------------------------------------------------
+
+## 📄 License
+
+Created for Hacker House Goa 2026.
+
+Open source for community builders.
