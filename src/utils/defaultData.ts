@@ -1,9 +1,9 @@
 import { BuilderData } from '../types';
 
 export const INITIAL_BUILDER_DATA: BuilderData = {
-  name: 'MADHAVAN SINGH',
+  name: 'YOUR NAME',
   handle: '@madhavan_builds',
-  role: 'Full Stack Developer',
+  role: 'YOUR ROLE',
   builderClass: '',
   techStack: ['React', 'Rust', 'Solana', 'TypeScript'],
   photoUrl: null,

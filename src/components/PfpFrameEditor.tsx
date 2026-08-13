@@ -1,7 +1,7 @@
 import React, { useRef, useState, useCallback } from 'react';
 import { BuilderData } from '../types';
 import { Upload, ZoomIn, User, Briefcase, Camera, RefreshCw } from 'lucide-react';
-import { handleInstantImageUpload, isHeic } from '../utils/imageUtils';
+import { handleInstantImageUpload } from '../utils/imageUtils';
 import { INITIAL_BUILDER_DATA } from '../utils/defaultData';
 import { CameraModal } from './CameraModal';
 
@@ -12,7 +12,6 @@ interface PfpFrameEditorProps {
 
 export const PfpFrameEditor: React.FC<PfpFrameEditorProps> = ({ builder, setBuilder }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [isConverting, setIsConverting] = useState(false);
   const [convertError, setConvertError] = useState<string | null>(null);
   const [isCameraOpen, setIsCameraOpen] = useState(false);
 
@@ -22,9 +21,6 @@ export const PfpFrameEditor: React.FC<PfpFrameEditorProps> = ({ builder, setBuil
     if (!file) return;
 
     setConvertError(null);
-    if (isHeic(file)) {
-      setIsConverting(true);
-    }
 
     handleInstantImageUpload(
       file,
@@ -38,14 +34,12 @@ export const PfpFrameEditor: React.FC<PfpFrameEditorProps> = ({ builder, setBuil
         }));
       },
       (convertedUrl) => {
-        setIsConverting(false);
         setBuilder((prev) => ({
           ...prev,
           photoUrl: convertedUrl,
         }));
       },
       (err) => {
-        setIsConverting(false);
         setConvertError('HEIC conversion failed. Please try a standard JPG/PNG.');
         console.error('HEIC background conversion error:', err);
       }
@@ -85,15 +79,7 @@ export const PfpFrameEditor: React.FC<PfpFrameEditorProps> = ({ builder, setBuil
             onClick={() => fileInputRef.current?.click()}
             className="w-full h-36 border-2 border-dashed border-[#023D23]/30 hover:border-[#023D23] bg-white rounded-2xl flex flex-col items-center justify-center cursor-pointer transition-all group relative"
           >
-            {isConverting ? (
-              <>
-                <RefreshCw className="w-6 h-6 text-[#023D23] animate-spin mb-1" />
-                <span className="text-xs font-mono font-bold text-[#06381D] animate-pulse">
-                  CONVERTING HEIC...
-                </span>
-                <span className="text-[9px] text-slate-500 font-mono">Optimizing image format...</span>
-              </>
-            ) : convertError ? (
+            {convertError ? (
               <>
                 <span className="text-[11px] font-mono font-bold text-red-600 text-center px-2">{convertError}</span>
                 <span className="text-[9px] text-[#023D23]/60 font-mono mt-0.5">Click to try again</span>
@@ -110,7 +96,7 @@ export const PfpFrameEditor: React.FC<PfpFrameEditorProps> = ({ builder, setBuil
             <input
               ref={fileInputRef}
               type="file"
-              accept="image/jpeg,image/jpg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
+              accept="image/*"
               className="hidden"
               onChange={handlePhotoUpload}
             />

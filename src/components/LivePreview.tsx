@@ -342,8 +342,9 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
           ctx.restore();
         }
 
-        // Builder Class — yellow rectangle below role
-        if (builder.builderClass && builder.builderClass.trim() !== '') {
+        // Builder Class — yellow rectangle below role (always shown)
+        {
+          const classLabel = (builder.builderClass && builder.builderClass.trim()) ? builder.builderClass.trim() : 'BUILDER CLASS';
           const classCx = OUTPUT_WIDTH * 0.500;
           const classCy = OUTPUT_HEIGHT * 0.8608;
           const badgeW = OUTPUT_WIDTH * 0.44;
@@ -372,7 +373,7 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
             ctx.font = `900 ${clsFontSize}px "JetBrains Mono", "Space Grotesk", sans-serif`;
           }
 
-          ctx.fillText(builder.builderClass.toUpperCase(), classCx, classCy);
+          ctx.fillText(classLabel.toUpperCase(), classCx, classCy);
           ctx.restore();
         }
       }
@@ -399,7 +400,7 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
     const hasNameChanged =
       builder.name &&
       builder.name.trim() !== '' &&
-      builder.name.trim().toUpperCase() !== 'MADHAVAN SINGH';
+      builder.name.trim().toUpperCase() !== 'YOUR NAME';
 
     const defaultStack = ['React', 'Rust', 'Solana', 'TypeScript'];
     const hasStackChanged =

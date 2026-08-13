@@ -6,7 +6,7 @@ import { LivePreview } from '../components/LivePreview';
 import { BuilderData } from '../types';
 import { INITIAL_BUILDER_DATA } from '../utils/defaultData';
 import { Upload, User, Briefcase, RefreshCw, ZoomIn, Camera, Shuffle, Zap, Pencil, Check } from 'lucide-react';
-import { handleInstantImageUpload, isHeic } from '../utils/imageUtils';
+import { handleInstantImageUpload } from '../utils/imageUtils';
 import { CameraModal } from '../components/CameraModal';
 
 const BUILDER_CLASSES = [
@@ -22,7 +22,6 @@ export const BuilderIdCreatorPage: React.FC = () => {
   const navigate = useNavigate();
   const [builder, setBuilder] = useState<BuilderData>(INITIAL_BUILDER_DATA);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [isConverting, setIsConverting] = useState(false);
   const [convertError, setConvertError] = useState<string | null>(null);
   const [isCameraOpen, setIsCameraOpen] = useState(false);
   const conversionToken = useRef(0);
@@ -37,10 +36,6 @@ export const BuilderIdCreatorPage: React.FC = () => {
     setConvertError(null);
     const token = ++conversionToken.current;
 
-    if (isHeic(file)) {
-      setIsConverting(true);
-    }
-
     handleInstantImageUpload(
       file,
       (instantUrl) => {
@@ -50,13 +45,11 @@ export const BuilderIdCreatorPage: React.FC = () => {
       },
       (convertedUrl) => {
         if (token === conversionToken.current) {
-          setIsConverting(false);
           setBuilder(prev => ({ ...prev, photoUrl: convertedUrl }));
         }
       },
       (err) => {
         if (token === conversionToken.current) {
-          setIsConverting(false);
           setConvertError('HEIC conversion failed. Please try a standard JPG/PNG.');
           console.error('HEIC background conversion error:', err);
         }
@@ -116,15 +109,7 @@ export const BuilderIdCreatorPage: React.FC = () => {
                     onClick={() => fileInputRef.current?.click()}
                     className="w-full h-36 border-2 border-dashed border-[#023D23]/30 hover:border-[#023D23] bg-white hover:bg-[#F9F7F2] rounded-xl p-2.5 flex flex-col items-center justify-center cursor-pointer transition-all duration-200 group relative shadow-2xs"
                   >
-                    {isConverting ? (
-                      <>
-                        <RefreshCw className="w-5 h-5 text-[#023D23] animate-spin mb-1" />
-                        <span className="text-[11px] font-mono font-extrabold text-[#023D23] tracking-wider animate-pulse">CONVERTING HEIC...</span>
-                        <span className="inline-block bg-[#023D23]/5 text-[#023D23]/70 font-mono text-[9px] font-bold px-2 py-0.5 rounded tracking-wider mt-0.5">
-                          Optimizing image format...
-                        </span>
-                      </>
-                    ) : convertError ? (
+                    {convertError ? (
                       <>
                         <span className="text-[11px] font-mono font-bold text-red-600 text-center px-2">{convertError}</span>
                         <span className="text-[9px] text-[#023D23]/60 font-mono mt-0.5">Click to try again</span>
@@ -143,7 +128,7 @@ export const BuilderIdCreatorPage: React.FC = () => {
                     <input
                       ref={fileInputRef}
                       type="file"
-                      accept="image/jpeg,image/jpg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
+                      accept="image/*"
                       className="hidden"
                       onChange={handlePhotoUpload}
                     />
@@ -240,7 +225,7 @@ export const BuilderIdCreatorPage: React.FC = () => {
                     type="text"
                     value={builder.name}
                     onChange={(e) => setBuilder((prev) => ({ ...prev, name: e.target.value }))}
-                    placeholder="MADHAVAN SINGH"
+                    placeholder="YOUR NAME"
                     className="w-full bg-white border border-[#023D23]/25 focus:border-[#023D23] focus:ring-1 focus:ring-[#023D23] rounded-xl px-3 py-1.5 text-xs text-[#023D23] font-mono font-bold uppercase transition-all shadow-2xs"
                   />
                 </div>
@@ -253,7 +238,7 @@ export const BuilderIdCreatorPage: React.FC = () => {
                     type="text"
                     value={builder.role}
                     onChange={(e) => setBuilder((prev) => ({ ...prev, role: e.target.value }))}
-                    placeholder="FULL STACK DEVELOPER"
+                    placeholder="YOUR ROLE"
                     className="w-full bg-white border border-[#023D23]/25 focus:border-[#023D23] focus:ring-1 focus:ring-[#023D23] rounded-xl px-3 py-1.5 text-xs text-[#023D23] font-mono font-bold uppercase transition-all shadow-2xs"
                   />
                 </div>
@@ -282,7 +267,7 @@ export const BuilderIdCreatorPage: React.FC = () => {
                       />
                     ) : (
                       <div className="flex-1 bg-white border border-[#023D23]/25 rounded-xl px-3 py-1.5 text-xs text-[#023D23] font-mono font-bold uppercase shadow-2xs truncate">
-                        {builder.builderClass || 'SELECT A CLASS'}
+                        {builder.builderClass || 'BUILDER CLASS'}
                       </div>
                     )}
                     {isEditingClass ? (
