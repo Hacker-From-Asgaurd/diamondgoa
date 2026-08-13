@@ -154,10 +154,10 @@ export async function shareCanvasToX(
 ): Promise<void> {
   console.log('[X SHARE] Button clicked');
 
-  const caption = `🚀 Ready to build at Hacker House Goa 2026! 🌴🔥\n\nJust created my HH Goa 2026 Builder Identity - ready to ship, build & make some noise. ⚡\n\nOfficial Site: https://hhgoa.com\n\n#FrameInGoa\n@247pmstudio`;
+  const fallbackCaption = `🚀 Ready to build at Hacker House Goa 2026! 🌴🔥\n\nJust created my HH Goa 2026 Builder Identity — ready to ship, build & make some noise. ⚡\n\nCreate yours: ${window.location.origin}\n\nOfficial Site: https://hhgoa.com\n\n#FrameInGoa\n@247pmstudio`;
 
   // 1. Immediately open X window with fallback URL (prevents blank page)
-  const fallbackUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(caption)}&url=${encodeURIComponent(window.location.origin)}`;
+  const fallbackUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(fallbackCaption)}`;
   const xWindow = window.open(fallbackUrl, '_blank');
   if (xWindow) {
     console.log('[X SHARE] X window opened with fallback URL');
@@ -194,7 +194,8 @@ export async function shareCanvasToX(
 
     console.log('[X SHARE] Share URL created:', finalShareUrl);
 
-    const xUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(caption)}&url=${encodeURIComponent(finalShareUrl)}`;
+    const successCaption = `🚀 Ready to build at Hacker House Goa 2026! 🌴🔥\n\nJust created my HH Goa 2026 Builder Identity — ready to ship, build & make some noise. ⚡\n\nCreate yours: ${finalShareUrl}\n\nOfficial Site: https://hhgoa.com\n\n#FrameInGoa\n@247pmstudio`;
+    const xUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(successCaption)}`;
 
     console.log('[X SHARE] Opening X');
     if (xWindow && !xWindow.closed) {
