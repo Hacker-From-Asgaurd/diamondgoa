@@ -73,27 +73,47 @@ function getProcessedBuilderOverlay(baseImg: HTMLImageElement, width: number, he
   const rx = width * 0.2373;
   const ry = height * 0.1887;
 
-  const iconMinX = width * 0.444; // 480px
-  const iconMaxX = width * 0.556; // 600px
-  const iconMinY = height * 0.378; // 510px
-  const iconMaxY = height * 0.467; // 630px
+  const iconMinX = width * 0.444;
+  const iconMaxX = width * 0.556;
+  const iconMinY = height * 0.378;
+  const iconMaxY = height * 0.467;
+
+  // Builder class badge region to erase from background
+  const badgeW = width * 0.44;
+  const badgeH = height * 0.052;
+  const badgeCx = width * 0.500;
+  const badgeCy = height * 0.8608;
+  const badgeMinX = badgeCx - badgeW / 2;
+  const badgeMaxX = badgeCx + badgeW / 2;
+  const badgeMinY = badgeCy - badgeH / 2;
+  const badgeMaxY = badgeCy + badgeH / 2;
 
   for (let y = 0; y < height; y++) {
     const dy = y - cy;
-    if (Math.abs(dy) > ry) continue;
+    const inEllipseRow = Math.abs(dy) <= ry;
+    const inBadgeRow = y >= badgeMinY && y <= badgeMaxY;
+
+    if (!inEllipseRow && !inBadgeRow) continue;
+
     for (let x = 0; x < width; x++) {
-      const dx = x - cx;
-      if ((dx * dx) / (rx * rx) + (dy * dy) / (ry * ry) <= 1.0) {
-        const i = (y * width + x) * 4;
-        const r = data[i];
-        const g = data[i + 1];
-        const b = data[i + 2];
+      const i = (y * width + x) * 4;
 
-        const isYellow = (r > 200 && g > 180 && b < 70);
-        const isCenterIcon = (x >= iconMinX && x <= iconMaxX && y >= iconMinY && y <= iconMaxY);
+      if (inBadgeRow && x >= badgeMinX && x <= badgeMaxX) {
+        data[i + 3] = 0;
+        continue;
+      }
 
-        if (isYellow || isCenterIcon) {
-          data[i + 3] = 0; // Transparent cutout
+      if (inEllipseRow) {
+        const dx = x - cx;
+        if ((dx * dx) / (rx * rx) + (dy * dy) / (ry * ry) <= 1.0) {
+          const r = data[i];
+          const g = data[i + 1];
+          const b = data[i + 2];
+          const isYellow = (r > 200 && g > 180 && b < 70);
+          const isCenterIcon = (x >= iconMinX && x <= iconMaxX && y >= iconMinY && y <= iconMaxY);
+          if (isYellow || isCenterIcon) {
+            data[i + 3] = 0;
+          }
         }
       }
     }
@@ -319,6 +339,40 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
           }
 
           ctx.fillText(builder.role.toUpperCase(), roleCx, roleCy);
+          ctx.restore();
+        }
+
+        // Builder Class — yellow rectangle below role
+        if (builder.builderClass && builder.builderClass.trim() !== '') {
+          const classCx = OUTPUT_WIDTH * 0.500;
+          const classCy = OUTPUT_HEIGHT * 0.8608;
+          const badgeW = OUTPUT_WIDTH * 0.44;
+          const badgeH = OUTPUT_HEIGHT * 0.052;
+          const badgeX = classCx - badgeW / 2;
+          const badgeY = classCy - badgeH / 2;
+
+          // Draw sharp rectangle background
+          ctx.save();
+          ctx.fillStyle = '#FFE600';
+          ctx.fillRect(badgeX, badgeY, badgeW, badgeH);
+          ctx.restore();
+
+          // Builder class label text
+          ctx.save();
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillStyle = '#023D23';
+
+          let clsFontSize = Math.round(OUTPUT_HEIGHT * 0.026);
+          ctx.font = `900 ${clsFontSize}px "JetBrains Mono", "Space Grotesk", sans-serif`;
+          const maxClsW = badgeW * 0.88;
+
+          while (ctx.measureText(builder.builderClass.toUpperCase()).width > maxClsW && clsFontSize > 12) {
+            clsFontSize -= 1;
+            ctx.font = `900 ${clsFontSize}px "JetBrains Mono", "Space Grotesk", sans-serif`;
+          }
+
+          ctx.fillText(builder.builderClass.toUpperCase(), classCx, classCy);
           ctx.restore();
         }
       }

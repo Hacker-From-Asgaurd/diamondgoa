@@ -4,7 +4,7 @@ export const INITIAL_BUILDER_DATA: BuilderData = {
   name: 'MADHAVAN SINGH',
   handle: '@madhavan_builds',
   role: 'Full Stack Developer',
-  builderClass: 'Terminal Wizard',
+  builderClass: '',
   techStack: ['React', 'Rust', 'Solana', 'TypeScript'],
   photoUrl: null,
   zoom: 1,

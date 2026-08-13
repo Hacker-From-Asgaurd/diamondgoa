@@ -5,10 +5,18 @@ import { BackButton } from '../components/BackButton';
 import { LivePreview } from '../components/LivePreview';
 import { BuilderData } from '../types';
 import { INITIAL_BUILDER_DATA } from '../utils/defaultData';
-import { generateRandomBuilderId } from '../utils/shareHelpers';
-import { Upload, User, Briefcase, RefreshCw, ZoomIn, Camera } from 'lucide-react';
+import { Upload, User, Briefcase, RefreshCw, ZoomIn, Camera, Shuffle, Zap, Pencil, Check } from 'lucide-react';
 import { handleInstantImageUpload, isHeic } from '../utils/imageUtils';
 import { CameraModal } from '../components/CameraModal';
+
+const BUILDER_CLASSES = [
+  { label: 'Terminal Wizard', emoji: '🧙‍♂️', desc: 'Lives in the CLI. Ships in the dark.' },
+  { label: 'Solana Degen', emoji: '⚡', desc: 'On-chain by day, by night, always.' },
+  { label: 'Full Stack Phantom', emoji: '👻', desc: 'Front, back, infra. No mercy.' },
+  { label: 'AI Overlord', emoji: '🤖', desc: 'Prompts models, builds empires.' },
+  { label: 'Rust Evangelist', emoji: '🦀', desc: 'Undefined behavior? Not on my watch.' },
+  { label: 'Design Hacker', emoji: '🎨', desc: 'Makes it look good AND ship fast.' },
+];
 
 export const BuilderIdCreatorPage: React.FC = () => {
   const navigate = useNavigate();
@@ -18,6 +26,8 @@ export const BuilderIdCreatorPage: React.FC = () => {
   const [convertError, setConvertError] = useState<string | null>(null);
   const [isCameraOpen, setIsCameraOpen] = useState(false);
   const conversionToken = useRef(0);
+  const [isEditingClass, setIsEditingClass] = useState(false);
+  const [customClass, setCustomClass] = useState('');
 
   const handlePhotoUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -246,6 +256,76 @@ export const BuilderIdCreatorPage: React.FC = () => {
                     placeholder="FULL STACK DEVELOPER"
                     className="w-full bg-white border border-[#023D23]/25 focus:border-[#023D23] focus:ring-1 focus:ring-[#023D23] rounded-xl px-3 py-1.5 text-xs text-[#023D23] font-mono font-bold uppercase transition-all shadow-2xs"
                   />
+                </div>
+
+                {/* Builder Class */}
+                <div>
+                  <label className="block text-[11px] font-mono font-bold text-[#023D23] uppercase mb-1 flex items-center gap-1.5">
+                    <Zap className="w-3.5 h-3.5 text-[#023D23]" /> BUILDER CLASS
+                  </label>
+                  <div className="flex items-center gap-2">
+                    {isEditingClass ? (
+                      <input
+                        type="text"
+                        autoFocus
+                        value={customClass}
+                        onChange={(e) => setCustomClass(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            if (customClass.trim()) setBuilder(prev => ({ ...prev, builderClass: customClass.trim() }));
+                            setIsEditingClass(false);
+                          }
+                          if (e.key === 'Escape') setIsEditingClass(false);
+                        }}
+                        placeholder="TYPE YOUR CLASS..."
+                        className="flex-1 bg-white border border-[#023D23] focus:ring-1 focus:ring-[#023D23] rounded-xl px-3 py-1.5 text-xs text-[#023D23] font-mono font-bold uppercase transition-all shadow-2xs"
+                      />
+                    ) : (
+                      <div className="flex-1 bg-white border border-[#023D23]/25 rounded-xl px-3 py-1.5 text-xs text-[#023D23] font-mono font-bold uppercase shadow-2xs truncate">
+                        {builder.builderClass || 'SELECT A CLASS'}
+                      </div>
+                    )}
+                    {isEditingClass ? (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (customClass.trim()) setBuilder(prev => ({ ...prev, builderClass: customClass.trim() }));
+                          setIsEditingClass(false);
+                        }}
+                        className="flex items-center gap-1 bg-[#023D23] hover:bg-[#012515] text-[#FFE600] rounded-xl px-3 py-1.5 text-[10px] font-mono font-extrabold uppercase transition-colors shrink-0 cursor-pointer"
+                      >
+                        <Check className="w-3 h-3" />
+                        <span>DONE</span>
+                      </button>
+                    ) : (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setCustomClass(builder.builderClass);
+                            setIsEditingClass(true);
+                          }}
+                          className="flex items-center gap-1 bg-[#023D23]/10 hover:bg-[#023D23]/20 text-[#023D23] rounded-xl px-3 py-1.5 text-[10px] font-mono font-extrabold uppercase transition-colors shrink-0 cursor-pointer"
+                        >
+                          <Pencil className="w-3 h-3" />
+                          <span>EDIT</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const current = builder.builderClass;
+                            const others = BUILDER_CLASSES.filter(c => c.label !== current);
+                            const next = others[Math.floor(Math.random() * others.length)];
+                            setBuilder(prev => ({ ...prev, builderClass: next.label }));
+                          }}
+                          className="flex items-center gap-1 bg-[#023D23] hover:bg-[#012515] text-[#FFE600] rounded-xl px-3 py-1.5 text-[10px] font-mono font-extrabold uppercase transition-colors shrink-0 cursor-pointer"
+                        >
+                          <Shuffle className="w-3 h-3" />
+                          <span>SHUFFLE</span>
+                        </button>
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
