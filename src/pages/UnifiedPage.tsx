@@ -22,12 +22,6 @@ export const UnifiedPage: React.FC = () => {
       sectionId = 'home';
     } else if (pathname === '/builder' || pathname === '/create-identity') {
       sectionId = 'identity-studio';
-    } else if (pathname === '/create-identity/pfp') {
-      sectionId = 'pfp-creator';
-    } else if (pathname === '/create-identity/builder') {
-      sectionId = 'builder-creator';
-    } else if (pathname.startsWith('/share/')) {
-      sectionId = 'share-result';
     }
 
     if (sectionId) {
@@ -46,6 +40,18 @@ export const UnifiedPage: React.FC = () => {
     }
   }, [location.pathname]);
 
+  if (isPfp) {
+    return <PfpCreatorPage />;
+  }
+
+  if (isBuilder) {
+    return <BuilderIdCreatorPage />;
+  }
+
+  if (isShare) {
+    return <SharePage />;
+  }
+
   return (
     <div className="w-full flex flex-col">
       <section id="home">
@@ -54,21 +60,6 @@ export const UnifiedPage: React.FC = () => {
       <section id="identity-studio">
         <IdentityStudioPage />
       </section>
-      {isPfp && (
-        <section id="pfp-creator">
-          <PfpCreatorPage />
-        </section>
-      )}
-      {isBuilder && (
-        <section id="builder-creator">
-          <BuilderIdCreatorPage />
-        </section>
-      )}
-      {isShare && (
-        <section id="share-result">
-          <SharePage />
-        </section>
-      )}
     </div>
   );
 };
