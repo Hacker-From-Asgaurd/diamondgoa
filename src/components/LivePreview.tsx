@@ -339,17 +339,24 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
     return () => { isMounted = false; };
   }, [builder, mode]);
 
-  const isInfoUpdated =
-    builder.name &&
-    builder.name.trim() !== '' &&
-    builder.name.trim().toUpperCase() !== 'MADHAVAN SINGH' &&
-    builder.handle &&
-    builder.handle.trim() !== '' &&
-    builder.handle.trim().toLowerCase() !== '@madhavan_builds';
+  const isInfoUpdated = (() => {
+    const hasNameChanged =
+      builder.name &&
+      builder.name.trim() !== '' &&
+      builder.name.trim().toUpperCase() !== 'MADHAVAN SINGH';
+
+    const defaultStack = ['React', 'Rust', 'Solana', 'TypeScript'];
+    const hasStackChanged =
+      !builder.techStack ||
+      builder.techStack.length !== defaultStack.length ||
+      !builder.techStack.every((val, index) => val === defaultStack[index]);
+
+    return hasNameChanged && hasStackChanged;
+  })();
 
   const handleDownload = () => {
     if (!isInfoUpdated) {
-      setShareError("Please customize your name and handle before downloading.");
+      setShareError("Please customize your name and tech stack before downloading.");
       setTimeout(() => setShareError(null), 4000);
       return;
     }
@@ -360,7 +367,7 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
 
   const handleShare = async () => {
     if (!isInfoUpdated) {
-      setShareError("Please customize your name and handle before sharing on X.");
+      setShareError("Please customize your name and tech stack before sharing on X.");
       setTimeout(() => setShareError(null), 4000);
       return;
     }
