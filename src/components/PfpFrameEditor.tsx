@@ -50,7 +50,7 @@ export const PfpFrameEditor: React.FC<PfpFrameEditorProps> = ({ builder, setBuil
   }, [setBuilder]);
 
   return (
-    <div className="bg-[#FFFDF0] text-[#06381D] border border-amber-200/60 rounded-2xl p-4 sm:p-5 shadow-hh-card flex flex-col justify-between h-full space-y-3.5 w-full">
+    <div className="bg-[#FFFDF0] text-[#06381D] border border-amber-200/60 rounded-2xl p-4 sm:p-5 shadow-hh-card flex flex-col justify-start h-full space-y-4 w-full">
       <div className="border-b border-amber-200/60 pb-3 space-y-1">
         <div className="flex items-center justify-between gap-2">
           <h2 className="text-sm font-mono font-extrabold text-[#06381D] uppercase tracking-wider flex items-center gap-2">
@@ -80,7 +80,7 @@ export const PfpFrameEditor: React.FC<PfpFrameEditorProps> = ({ builder, setBuil
         <div className="flex flex-col gap-3">
           <div
             onClick={() => fileInputRef.current?.click()}
-            className="w-full h-26 border-2 border-dashed border-[#023D23]/30 hover:border-[#023D23] bg-white rounded-2xl flex flex-col items-center justify-center cursor-pointer transition-all group relative"
+            className="w-full h-36 border-2 border-dashed border-[#023D23]/30 hover:border-[#023D23] bg-white rounded-2xl flex flex-col items-center justify-center cursor-pointer transition-all group relative"
           >
             {convertError ? (
               <>
