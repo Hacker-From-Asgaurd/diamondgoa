@@ -16,6 +16,9 @@ export const PfpCreatorPage: React.FC = () => {
 
 
       <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        <div className="flex justify-start">
+          <BackButton onClick={() => navigate('/')} label="BACK TO HOME" />
+        </div>
         {/* Step Indicator Header */}
         <StepIndicator
           currentStep={builder.photoUrl ? 3 : 2}
