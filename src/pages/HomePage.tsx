@@ -5,6 +5,7 @@ export const HomePage: React.FC = () => {
   const navigate = useNavigate();
 
   const handleCreateIdentity = () => {
+    document.getElementById('identity-studio')?.scrollIntoView({ behavior: 'smooth' });
     navigate('/create-identity');
   };
 
