@@ -10,6 +10,10 @@ export const UnifiedPage: React.FC = () => {
   const location = useLocation();
   const isInitial = useRef(true);
 
+  const isPfp = location.pathname === '/create-identity/pfp';
+  const isBuilder = location.pathname === '/create-identity/builder';
+  const isShare = location.pathname.startsWith('/share/');
+
   useEffect(() => {
     const pathname = location.pathname;
     let sectionId = '';
@@ -27,18 +31,18 @@ export const UnifiedPage: React.FC = () => {
     }
 
     if (sectionId) {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        const scrollBehavior = isInitial.current ? 'auto' : 'smooth';
-        const delay = isInitial.current ? 100 : 0;
+      const scrollBehavior = isInitial.current ? 'auto' : 'smooth';
+      const delay = 100; // 100ms delay to guarantee DOM mounting before scrolling
 
-        const timer = setTimeout(() => {
+      const timer = setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
           element.scrollIntoView({ behavior: scrollBehavior, block: 'start' });
-        }, delay);
+        }
+      }, delay);
 
-        isInitial.current = false;
-        return () => clearTimeout(timer);
-      }
+      isInitial.current = false;
+      return () => clearTimeout(timer);
     }
   }, [location.pathname]);
 
@@ -50,15 +54,21 @@ export const UnifiedPage: React.FC = () => {
       <section id="identity-studio">
         <IdentityStudioPage />
       </section>
-      <section id="pfp-creator">
-        <PfpCreatorPage />
-      </section>
-      <section id="builder-creator">
-        <BuilderIdCreatorPage />
-      </section>
-      <section id="share-result">
-        <SharePage />
-      </section>
+      {isPfp && (
+        <section id="pfp-creator">
+          <PfpCreatorPage />
+        </section>
+      )}
+      {isBuilder && (
+        <section id="builder-creator">
+          <BuilderIdCreatorPage />
+        </section>
+      )}
+      {isShare && (
+        <section id="share-result">
+          <SharePage />
+        </section>
+      )}
     </div>
   );
 };
