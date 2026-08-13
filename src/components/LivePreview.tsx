@@ -339,13 +339,31 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
     return () => { isMounted = false; };
   }, [builder, mode]);
 
+  const isInfoUpdated =
+    builder.name &&
+    builder.name.trim() !== '' &&
+    builder.name.trim().toUpperCase() !== 'MADHAVAN SINGH' &&
+    builder.handle &&
+    builder.handle.trim() !== '' &&
+    builder.handle.trim().toLowerCase() !== '@madhavan_builds';
+
   const handleDownload = () => {
+    if (!isInfoUpdated) {
+      setShareError("Please customize your name and handle before downloading.");
+      setTimeout(() => setShareError(null), 4000);
+      return;
+    }
     if (!canvasRef.current) return;
     const filename = `HHGoa_2026_${mode.toUpperCase()}_${(builder.name || 'builder').replace(/\s+/g, '_')}.png`;
     downloadCanvasImage(canvasRef.current, filename);
   };
 
   const handleShare = async () => {
+    if (!isInfoUpdated) {
+      setShareError("Please customize your name and handle before sharing on X.");
+      setTimeout(() => setShareError(null), 4000);
+      return;
+    }
     if (!canvasRef.current || isSharing) return;
     setIsSharing(true);
     setShareError(null);
@@ -381,36 +399,42 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
       </div>
 
       {/* Action Buttons Aligned underneath */}
-      <div className="w-full max-w-[340px] sm:max-w-[380px] space-y-2">
-        <div className="grid grid-cols-2 gap-2">
-          {/* Download PNG Button */}
-          <button
-            onClick={handleDownload}
-            className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl font-mono font-extrabold text-xs uppercase text-white bg-[#023D23] hover:bg-[#012A18] border border-emerald-700/40 shadow-md transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
-          >
-            <Download className="w-3.5 h-3.5 stroke-[2.5]" />
-            <span>DOWNLOAD PNG</span>
-          </button>
+      {builder.photoUrl && (
+        <div className="w-full max-w-[340px] sm:max-w-[380px] space-y-2">
+          <div className="grid grid-cols-2 gap-2">
+            {/* Download PNG Button */}
+            <button
+              onClick={handleDownload}
+              className={`flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl font-mono font-extrabold text-xs uppercase text-white bg-[#023D23] hover:bg-[#012A18] border border-emerald-700/40 shadow-md transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer ${
+                !isInfoUpdated ? 'opacity-50 cursor-not-allowed filter grayscale-[35%]' : ''
+              }`}
+            >
+              <Download className="w-3.5 h-3.5 stroke-[2.5]" />
+              <span>DOWNLOAD PNG</span>
+            </button>
 
-          {/* Share on X Button */}
-          <button
-            onClick={handleShare}
-            disabled={isSharing}
-            className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl font-mono font-extrabold text-xs uppercase text-[#023D23] bg-white border border-slate-200 hover:bg-slate-50 shadow-sm transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer disabled:opacity-70"
-          >
-            <Share2 className={`w-3.5 h-3.5 ${isSharing ? 'animate-spin' : ''}`} />
-            <span className="truncate">
-              {shareNotice ? shareNotice : isSharing ? (shareStatus || 'PREPARING...') : 'SHARE ON X'}
-            </span>
-          </button>
-        </div>
-
-        {shareError && (
-          <div className="text-[10px] font-mono font-bold text-red-300 bg-red-950/80 border border-red-500/40 rounded-lg px-2.5 py-1 text-center mt-1">
-            {shareError}
+            {/* Share on X Button */}
+            <button
+              onClick={handleShare}
+              disabled={isSharing}
+              className={`flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl font-mono font-extrabold text-xs uppercase text-[#023D23] bg-white border border-slate-200 hover:bg-slate-50 shadow-sm transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer ${
+                !isInfoUpdated ? 'opacity-50 cursor-not-allowed filter grayscale-[35%]' : ''
+              }`}
+            >
+              <Share2 className={`w-3.5 h-3.5 ${isSharing ? 'animate-spin' : ''}`} />
+              <span className="truncate">
+                {shareNotice ? shareNotice : isSharing ? (shareStatus || 'PREPARING...') : 'SHARE ON X'}
+              </span>
+            </button>
           </div>
-        )}
-      </div>
+
+          {shareError && (
+            <div className="text-[10px] font-mono font-bold text-red-300 bg-red-950/80 border border-red-500/40 rounded-lg px-2.5 py-1.5 text-center mt-1">
+              {shareError}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
