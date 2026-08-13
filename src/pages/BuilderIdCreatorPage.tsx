@@ -57,18 +57,7 @@ export const BuilderIdCreatorPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#03502E] text-white flex flex-col font-sans selection:bg-[#FF007A] selection:text-white">
-      {/* Top Header Bar */}
-      <header className="w-full bg-[#023D23] border-b border-emerald-800/40 py-4 px-6 sm:px-12 select-none">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <BackButton
-            onClick={() => navigate('/create-identity')}
-            label="BACK TO FORMAT SELECTION"
-          />
-          <div className="font-mono text-[#FFE600] text-xs sm:text-sm font-bold tracking-widest uppercase">
-            BUILDER ID CARD CREATOR (1080×1350)
-          </div>
-        </div>
-      </header>
+
 
       <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 space-y-8">
         {/* Step Indicator Header */}
@@ -235,12 +224,7 @@ export const BuilderIdCreatorPage: React.FC = () => {
         </div>
       </main>
 
-      {/* Minimal Footer */}
-      <footer className="w-full border-t border-[#023D23] bg-[#023D23] py-5 mt-auto">
-        <div className="max-w-6xl mx-auto px-4 text-center font-mono text-xs text-emerald-300/60">
-          <div>28–31 OCT 2026 · GOA, INDIA · 2:47 PM STUDIO</div>
-        </div>
-      </footer>
+
     </div>
   );
 };

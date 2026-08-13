@@ -1,37 +1,48 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
 
 export const HomePage: React.FC = () => {
   const navigate = useNavigate();
 
   const handleCreateIdentity = () => {
-    navigate('/builder');
+    navigate('/create-identity');
   };
+
+  const ASSET = "/assets/";
 
   return (
     <main className="home">
-      <section className="hero" aria-label="Hacker House Goa 2026">
-        <img
-          className="hero-image"
-          src="/home.png"
-          alt="Hacker House Goa 2026 homepage artwork"
-        />
+      <section className="hero">
+        <div className="title-wrap">
+          <img className="hacker-title" src={`${ASSET}hacker-house.png`} alt="Hacker House" />
+          <img className="goa-logo" src={`${ASSET}goa.png`} alt="Goa" />
+        </div>
 
-        {/* Styled clickable button positioned over the CREATE MY IDENTITY button area in artwork */}
-        <button
-          className="identity-hotspot"
-          onClick={handleCreateIdentity}
-          aria-label="Create my identity"
-          type="button"
-        >
+        <div className="event-meta">
+          <span>GOA, INDIA</span>
+          <span className="dot">•</span>
+          <span>28 – 31 OCT 2026</span>
+          <span className="studio-text">2:47 PM STUDIO</span>
+        </div>
+
+        <div className="tagline">BUILD <span>•</span> CREATE <span>•</span> DISRUPT</div>
+
+        <button className="identity-button" onClick={handleCreateIdentity}>
           <span>CREATE MY IDENTITY</span>
-          <ArrowRight className="button-arrow" />
+          <span className="arrow">→</span>
         </button>
       </section>
+
+      <img
+        className="beach-art"
+        src="/back.png"
+        alt=""
+        aria-hidden="true"
+      />
     </main>
   );
 };
+
 
 
 
