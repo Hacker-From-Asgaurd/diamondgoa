@@ -1,4 +1,4 @@
-import heic2any from 'heic2any';
+import { heicTo } from 'heic-to';
 
 export const isHeic = (file: File): boolean =>
   file.type.toLowerCase().includes('heic') ||
@@ -82,9 +82,9 @@ export function handleInstantImageUpload(
       }
 
       // Convert asynchronously with optimized resolution
-      const rawRes = await heic2any({
+      const rawRes = await heicTo({
         blob: file,
-        toType: 'image/jpeg',
+        type: 'image/jpeg',
         quality: 0.7,
       });
 
