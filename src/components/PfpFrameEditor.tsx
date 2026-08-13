@@ -77,10 +77,10 @@ export const PfpFrameEditor: React.FC<PfpFrameEditorProps> = ({ builder, setBuil
           Submit Profile Image
         </label>
 
-        <div className="flex flex-col sm:flex-row items-center gap-4">
+        <div className="flex flex-col gap-3">
           <div
             onClick={() => fileInputRef.current?.click()}
-            className="w-full sm:w-1/2 h-28 border-2 border-dashed border-[#023D23]/30 hover:border-[#023D23] bg-white rounded-2xl flex flex-col items-center justify-center cursor-pointer transition-all group relative"
+            className="w-full h-26 border-2 border-dashed border-[#023D23]/30 hover:border-[#023D23] bg-white rounded-2xl flex flex-col items-center justify-center cursor-pointer transition-all group relative"
           >
             {convertError ? (
               <>
@@ -106,7 +106,7 @@ export const PfpFrameEditor: React.FC<PfpFrameEditorProps> = ({ builder, setBuil
           </div>
 
           {/* Photo Adjust Controls */}
-          <div className="w-full sm:w-1/2 space-y-2.5 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm">
+          <div className="w-full space-y-2.5 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm">
             <div className="flex items-center justify-between">
               <span className="text-[11px] font-mono text-[#06381D] font-bold flex items-center gap-1">
                 <ZoomIn className="w-3 h-3 text-[#023D23]" /> Zoom ({builder.zoom.toFixed(1)}x)
