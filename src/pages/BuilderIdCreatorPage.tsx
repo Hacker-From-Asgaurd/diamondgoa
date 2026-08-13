@@ -78,7 +78,7 @@ export const BuilderIdCreatorPage: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 items-stretch max-w-6xl mx-auto w-full">
           {/* LEFT COLUMN: Customization Form */}
           <div className="w-full h-full flex flex-col">
-            <div className="bg-[#FFFDF0] text-[#023D23] border border-amber-200/70 rounded-2xl p-4 sm:p-5 shadow-md flex flex-col justify-start space-y-3 w-full h-full">
+            <div className="bg-[#FFFDF0] text-[#023D23] border border-amber-200/70 rounded-2xl p-4 sm:p-5 shadow-md flex flex-col justify-start space-y-4 w-full h-full">
               {/* Step 1: Upload Photo */}
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
@@ -101,7 +101,7 @@ export const BuilderIdCreatorPage: React.FC = () => {
                 <div className="flex flex-col gap-3">
                   <div
                     onClick={() => fileInputRef.current?.click()}
-                    className="w-full h-24 sm:h-26 border-2 border-dashed border-[#023D23]/30 hover:border-[#023D23] bg-white hover:bg-[#F9F7F2] rounded-xl p-2.5 flex flex-col items-center justify-center cursor-pointer transition-all duration-200 group relative shadow-2xs"
+                    className="w-full h-36 border-2 border-dashed border-[#023D23]/30 hover:border-[#023D23] bg-white hover:bg-[#F9F7F2] rounded-xl p-2.5 flex flex-col items-center justify-center cursor-pointer transition-all duration-200 group relative shadow-2xs"
                   >
                     {convertError ? (
                       <>
@@ -180,7 +180,7 @@ export const BuilderIdCreatorPage: React.FC = () => {
               </div>
 
               {/* Step 2: Name & Details */}
-              <div className="space-y-2 pt-2 border-t border-[#023D23]/10">
+              <div className="space-y-3 pt-2.5 border-t border-[#023D23]/10">
                 <div className="flex items-center gap-1.5">
                   <span className="w-1.5 h-3 bg-[#023D23] rounded-full" />
                   <label className="block text-[11px] font-mono font-extrabold text-[#023D23] uppercase tracking-wider">
