@@ -32,7 +32,7 @@ export const SharePage: React.FC = () => {
   };
 
   const handleShareToX = () => {
-    const caption = `🚀 Ready to build at Hacker House Goa 2026! 🌴🔥\n\nJust created my HH Goa 2026 Builder Identity - ready to ship, build & make some noise. ⚡\n\nCreate yours: https://diamondgoa.vercel.app/\n\nOfficial Site: https://hhgoa.com\n\n#FrameInGoa\n@247pmstudio`;
+    const caption = `🚀 Ready to build at Hacker House Goa 2026! 🌴🔥\n\nJust created my HH Goa 2026 Builder Identity - ready to ship, build & make some noise. ⚡\n\nOfficial Site: https://hhgoa.com\n\n#FrameInGoa\n@247pmstudio`;
 
     const shareUrl = window.location.href;
     const intentUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(caption)}&url=${encodeURIComponent(shareUrl)}`;

@@ -340,6 +340,8 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
   }, [builder, mode]);
 
   const isInfoUpdated = (() => {
+    if (builder.photoUrl) return true;
+
     const hasNameChanged =
       builder.name &&
       builder.name.trim() !== '' &&

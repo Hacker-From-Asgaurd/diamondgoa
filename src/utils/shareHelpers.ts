@@ -154,10 +154,10 @@ export async function shareCanvasToX(
 ): Promise<void> {
   console.log('[X SHARE] Button clicked');
 
-  const caption = `🚀 Ready to build at Hacker House Goa 2026! 🌴🔥\n\nJust created my HH Goa 2026 Builder Identity - ready to ship, build & make some noise. ⚡\n\nCreate yours: https://diamondgoa.vercel.app/\n\nOfficial Site: https://hhgoa.com\n\n#FrameInGoa\n@247pmstudio`;
+  const caption = `🚀 Ready to build at Hacker House Goa 2026! 🌴🔥\n\nJust created my HH Goa 2026 Builder Identity - ready to ship, build & make some noise. ⚡\n\nOfficial Site: https://hhgoa.com\n\n#FrameInGoa\n@247pmstudio`;
 
   // 1. Immediately open X window with fallback URL (prevents blank page)
-  const fallbackUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(caption)}&url=${encodeURIComponent('https://hhgoa.com')}`;
+  const fallbackUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(caption)}&url=${encodeURIComponent(window.location.origin)}`;
   const xWindow = window.open(fallbackUrl, '_blank');
   if (xWindow) {
     console.log('[X SHARE] X window opened with fallback URL');
@@ -190,7 +190,7 @@ export async function shareCanvasToX(
 
     const finalShareUrl = publicImageUrl
       ? `${window.location.origin}/share/${Math.random().toString(36).substring(2, 10)}?img=${encodeURIComponent(publicImageUrl)}&mode=${mode}&name=${encodeURIComponent(builder.name || '')}&role=${encodeURIComponent(builder.role || '')}`
-      : 'https://hhgoa.com';
+      : window.location.origin;
 
     console.log('[X SHARE] Share URL created:', finalShareUrl);
 
