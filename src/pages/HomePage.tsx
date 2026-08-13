@@ -8,7 +8,7 @@ export const HomePage: React.FC = () => {
     navigate('/create-identity');
   };
 
-  const ASSET = "/assets/";
+  const ASSET = "/home_assets/";
 
   return (
     <main className="home">
