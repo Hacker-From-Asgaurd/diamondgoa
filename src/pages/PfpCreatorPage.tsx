@@ -35,7 +35,7 @@ export const PfpCreatorPage: React.FC = () => {
         />
 
         {/* Main Studio Workspace Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 items-stretch max-w-3xl mx-auto w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 items-stretch max-w-6xl mx-auto w-full">
           {/* LEFT COLUMN: PfpFrameEditor */}
           <div className="w-full h-full flex flex-col">
             <PfpFrameEditor builder={builder} setBuilder={setBuilder} />

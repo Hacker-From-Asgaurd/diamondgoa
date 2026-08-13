@@ -75,7 +75,7 @@ export const BuilderIdCreatorPage: React.FC = () => {
         />
 
         {/* Main Studio Workspace Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 items-stretch max-w-3xl mx-auto w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 items-stretch max-w-6xl mx-auto w-full">
           {/* LEFT COLUMN: Customization Form */}
           <div className="w-full h-full flex flex-col">
             <div className="bg-[#FFFDF0] text-[#023D23] border border-amber-200/70 rounded-2xl p-4 sm:p-5 shadow-md flex flex-col justify-start space-y-3 w-full h-full">
