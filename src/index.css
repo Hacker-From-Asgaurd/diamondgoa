@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #003c25;
+    color: #FFF8E7;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #023D23;
+}
+::-webkit-scrollbar-thumb {
+  background: #FFE000;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FF006B;
+}
+
+/* Styles from hh-goa-home-ui */
+.home {
+  width: 100%;
+  min-height: 100vh;
+  background: #003c25;
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  line-height: 0;
+}
+
+.hero-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.identity-hotspot {
+  position: absolute;
+  left: 36.2%;
+  top: 50.9%;
+  width: 25.4%;
+  height: 7.5%;
+  padding: 0 1.5vw;
+  margin: 0;
+  border: 2px solid #FFE000;
+  border-radius: 999px;
+  background: #FF006B;
+  color: #FFF8E7;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-weight: 800;
+  font-size: clamp(8px, 1.1vw, 16px);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(4px, 0.5vw, 8px);
+  cursor: pointer;
+  z-index: 2;
+  box-shadow: 0 4px 15px rgba(255, 0, 107, 0.4);
+  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  outline: none;
+}
+
+.identity-hotspot:hover {
+  background: #E0005C;
+  transform: translateY(-0.1vw) scale(1.02);
+  box-shadow: 0 8px 25px rgba(255, 0, 107, 0.55), 0 0 10px rgba(255, 224, 0, 0.2);
+}
+
+.identity-hotspot:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 4px 10px rgba(255, 0, 107, 0.4);
+}
+
+.identity-hotspot:focus-visible {
+  outline: 3px solid #fff4c9;
+  outline-offset: 5px;
+}
+
+.identity-hotspot .button-arrow {
+  width: clamp(10px, 1.3vw, 18px);
+  height: clamp(10px, 1.3vw, 18px);
+  color: #FFE000;
+  transition: transform 0.25s ease;
+}
+
+.identity-hotspot:hover .button-arrow {
+  transform: translateX(0.3vw);
+}
+
+@media (max-width: 700px) {
+  .identity-hotspot {
+    left: 36.2%;
+    top: 50.9%;
+    width: 25.4%;
+    height: 7.5%;
+    font-size: clamp(7px, 1.2vw, 14px);
+    padding: 0 1vw;
+  }
+}
+

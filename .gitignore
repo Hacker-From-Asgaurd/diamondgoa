@@ -1,0 +1,6 @@
+node_modules/
+dist/
+scratch/
+*.png
+!public/*.png
+!src/assets/*.png
