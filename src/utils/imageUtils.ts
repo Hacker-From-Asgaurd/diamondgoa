@@ -1,5 +1,3 @@
-import { heicTo } from 'heic-to';
-
 export const isHeic = (file: File): boolean =>
   file.type.toLowerCase().includes('heic') ||
   file.type.toLowerCase().includes('heif') ||
@@ -29,20 +27,11 @@ export function downscaleImage(src: string, max = 600): Promise<string> {
   });
 }
 
-function testImageDecode(url: string): Promise<boolean> {
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.onload = () => resolve(true);
-    img.onerror = () => resolve(false);
-    img.src = url;
-  });
-}
-
 /**
  * Instant HEIC upload pipeline:
  * 1. Immediately returns object URL (0ms latency, preview appears instantly).
- * 2. Asynchronously converts HEIC to downscaled JPEG (600px max) in background.
- * 3. Caches conversion result keyed by file name/size/lastModified.
+ * 2. Asynchronously converts HEIC to JPEG in background (lazy-loads heic-to only when needed).
+ * 3. Caches conversion result.
  * 4. Silently updates state with converted JPEG when ready.
  */
 export function handleInstantImageUpload(
@@ -72,26 +61,17 @@ export function handleInstantImageUpload(
   // 3. Perform background conversion without blocking UI
   setTimeout(async () => {
     try {
-      // Check if browser native decoder works
-      const nativeOk = await testImageDecode(instantUrl);
-      if (nativeOk) {
-        const converted = await downscaleImage(instantUrl, 600);
-        heicConversionCache.set(key, converted);
-        if (onConvertedUrl) onConvertedUrl(converted);
-        return;
-      }
+      // Dynamic import to avoid loading heic-to for non-HEIC users
+      const { heicTo } = await import('heic-to');
 
-      // Convert asynchronously with optimized resolution
       const rawRes = await heicTo({
         blob: file,
         type: 'image/jpeg',
-        quality: 0.7,
+        quality: 0.75,
       });
 
       const blob = Array.isArray(rawRes) ? rawRes[0] : rawRes;
-      const tempUrl = URL.createObjectURL(blob as Blob);
-      const converted = await downscaleImage(tempUrl, 600);
-      URL.revokeObjectURL(tempUrl);
+      const converted = URL.createObjectURL(blob as Blob);
 
       heicConversionCache.set(key, converted);
       if (onConvertedUrl) onConvertedUrl(converted);
