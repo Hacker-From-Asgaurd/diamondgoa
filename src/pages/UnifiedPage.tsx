@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { HomePage } from './HomePage';
 import { IdentityStudioPage } from './IdentityStudioPage';
@@ -6,9 +6,10 @@ import { PfpCreatorPage } from './PfpCreatorPage';
 import { BuilderIdCreatorPage } from './BuilderIdCreatorPage';
 import { SharePage } from './SharePage';
 
+let isGlobalInitial = true;
+
 export const UnifiedPage: React.FC = () => {
   const location = useLocation();
-  const isInitial = useRef(true);
 
   const isPfp = location.pathname === '/create-identity/pfp';
   const isBuilder = location.pathname === '/create-identity/builder';
@@ -25,8 +26,8 @@ export const UnifiedPage: React.FC = () => {
     }
 
     if (sectionId) {
-      const scrollBehavior = isInitial.current ? 'auto' : 'smooth';
-      const delay = 100; // 100ms delay to guarantee DOM mounting before scrolling
+      const scrollBehavior = isGlobalInitial ? 'auto' : 'smooth';
+      const delay = 200; // 200ms delay to let router/browser scroll-restoration complete
 
       const timer = setTimeout(() => {
         const element = document.getElementById(sectionId);
@@ -35,7 +36,7 @@ export const UnifiedPage: React.FC = () => {
         }
       }, delay);
 
-      isInitial.current = false;
+      isGlobalInitial = false;
       return () => clearTimeout(timer);
     }
   }, [location.pathname]);
