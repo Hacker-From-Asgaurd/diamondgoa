@@ -1,8 +1,8 @@
 import heic2any from 'heic2any';
 
 export const isHeic = (file: File): boolean =>
-  file.type === 'image/heic' ||
-  file.type === 'image/heif' ||
+  file.type.toLowerCase().includes('heic') ||
+  file.type.toLowerCase().includes('heif') ||
   file.name.toLowerCase().endsWith('.heic') ||
   file.name.toLowerCase().endsWith('.heif');
 

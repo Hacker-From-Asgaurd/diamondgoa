@@ -45,6 +45,7 @@ export const BuilderIdCreatorPage: React.FC = () => {
       (err) => {
         if (token === conversionToken.current) {
           setIsConverting(false);
+          setConvertError('HEIC conversion failed. Please try a standard JPG/PNG.');
           console.error('HEIC background conversion error:', err);
         }
       }
@@ -103,7 +104,15 @@ export const BuilderIdCreatorPage: React.FC = () => {
                     onClick={() => fileInputRef.current?.click()}
                     className="w-full h-36 border-2 border-dashed border-[#023D23]/30 hover:border-[#023D23] bg-white hover:bg-[#F9F7F2] rounded-xl p-2.5 flex flex-col items-center justify-center cursor-pointer transition-all duration-200 group relative shadow-2xs"
                   >
-                    {convertError ? (
+                    {isConverting ? (
+                      <>
+                        <RefreshCw className="w-5 h-5 text-[#023D23] animate-spin mb-1" />
+                        <span className="text-[11px] font-mono font-extrabold text-[#023D23] tracking-wider animate-pulse">CONVERTING HEIC...</span>
+                        <span className="inline-block bg-[#023D23]/5 text-[#023D23]/70 font-mono text-[9px] font-bold px-2 py-0.5 rounded tracking-wider mt-0.5">
+                          Optimizing image format...
+                        </span>
+                      </>
+                    ) : convertError ? (
                       <>
                         <span className="text-[11px] font-mono font-bold text-red-600 text-center px-2">{convertError}</span>
                         <span className="text-[9px] text-[#023D23]/60 font-mono mt-0.5">Click to try again</span>
@@ -122,7 +131,7 @@ export const BuilderIdCreatorPage: React.FC = () => {
                     <input
                       ref={fileInputRef}
                       type="file"
-                      accept="image/jpeg,image/jpg,image/png,image/heic,image/heif,.jpg,.jpeg,.png,.heic,.heif"
+                      accept="image/jpeg,image/jpg,image/png,image/heic,image/heif,image/x-heic,image/heic-sequence,image/heif-sequence,.jpg,.jpeg,.png,.heic,.heif,.HEIC,.HEIF"
                       className="hidden"
                       onChange={handlePhotoUpload}
                     />

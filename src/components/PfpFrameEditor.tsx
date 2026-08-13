@@ -44,6 +44,7 @@ export const PfpFrameEditor: React.FC<PfpFrameEditorProps> = ({ builder, setBuil
       },
       (err) => {
         setIsConverting(false);
+        setConvertError('HEIC conversion failed. Please try a standard JPG/PNG.');
         console.error('HEIC background conversion error:', err);
       }
     );
@@ -82,7 +83,15 @@ export const PfpFrameEditor: React.FC<PfpFrameEditorProps> = ({ builder, setBuil
             onClick={() => fileInputRef.current?.click()}
             className="w-full h-36 border-2 border-dashed border-[#023D23]/30 hover:border-[#023D23] bg-white rounded-2xl flex flex-col items-center justify-center cursor-pointer transition-all group relative"
           >
-            {convertError ? (
+            {isConverting ? (
+              <>
+                <RefreshCw className="w-6 h-6 text-[#023D23] animate-spin mb-1" />
+                <span className="text-xs font-mono font-bold text-[#06381D] animate-pulse">
+                  CONVERTING HEIC...
+                </span>
+                <span className="text-[9px] text-slate-500 font-mono">Optimizing image format...</span>
+              </>
+            ) : convertError ? (
               <>
                 <span className="text-[11px] font-mono font-bold text-red-600 text-center px-2">{convertError}</span>
                 <span className="text-[9px] text-[#023D23]/60 font-mono mt-0.5">Click to try again</span>
@@ -99,7 +108,7 @@ export const PfpFrameEditor: React.FC<PfpFrameEditorProps> = ({ builder, setBuil
             <input
               ref={fileInputRef}
               type="file"
-              accept="image/jpeg,image/jpg,image/png,image/heic,image/heif,.jpg,.jpeg,.png,.heic,.heif"
+              accept="image/jpeg,image/jpg,image/png,image/heic,image/heif,image/x-heic,image/heic-sequence,image/heif-sequence,.jpg,.jpeg,.png,.heic,.heif,.HEIC,.HEIF"
               className="hidden"
               onChange={handlePhotoUpload}
             />
