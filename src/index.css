@@ -85,6 +85,15 @@
   height: auto;
 }
 
+@keyframes float {
+  0%, 100% {
+    transform: translate(-50%, -48%) translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translate(-50%, -48%) translateY(-15px) rotate(2deg);
+  }
+}
+
 .goa-logo {
   position: absolute;
   width: clamp(105px, 12vw, 180px);
@@ -93,6 +102,7 @@
   top: 50%;
   transform: translate(-50%, -48%);
   z-index: 2;
+  animation: float 6s ease-in-out infinite;
 }
 
 .event-meta {
