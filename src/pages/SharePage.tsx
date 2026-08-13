@@ -32,17 +32,10 @@ export const SharePage: React.FC = () => {
   };
 
   const handleShareToX = () => {
-    const nameStr = name.trim();
-    const caption = mode === 'frame'
-      ? (nameStr
-          ? `${nameStr}'s builder identity for HH Goa 2026 🌴\n\nSee you in Goa.`
-          : `Just framed my builder identity for HH Goa 2026 🌴\n\nSee you in Goa.`)
-      : (nameStr
-          ? `${nameStr}'s HH Goa 2026 Builder Identity is ready 🌴\n\nSee you in Goa.`
-          : `My HH Goa 2026 Builder Identity is ready 🌴\n\nSee you in Goa.`);
+    const caption = `🚀 Ready to build at Hacker House Goa 2026! 🌴🔥\n\nJust created my HH Goa 2026 Builder Identity - ready to ship, build & make some noise. ⚡\n\nCreate yours: https://diamondgoa.vercel.app/\n\nOfficial Site: https://hhgoa.com\n\n#FrameInGoa\n@247pmstudio`;
 
     const shareUrl = window.location.href;
-    const intentUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(caption)}&hashtags=FrameInGoa&url=${encodeURIComponent(shareUrl)}`;
+    const intentUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(caption)}&url=${encodeURIComponent(shareUrl)}`;
     window.open(intentUrl, '_blank', 'noopener,noreferrer');
     triggerConfetti();
   };
