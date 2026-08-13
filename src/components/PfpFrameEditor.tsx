@@ -3,6 +3,7 @@ import { BuilderData } from '../types';
 import { Upload, ZoomIn, User, Briefcase, Camera, RefreshCw } from 'lucide-react';
 import { handleInstantImageUpload, isHeic } from '../utils/imageUtils';
 import { INITIAL_BUILDER_DATA } from '../utils/defaultData';
+import { CameraModal } from './CameraModal';
 
 interface PfpFrameEditorProps {
   builder: BuilderData;
@@ -13,6 +14,7 @@ export const PfpFrameEditor: React.FC<PfpFrameEditorProps> = ({ builder, setBuil
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isConverting, setIsConverting] = useState(false);
   const [convertError, setConvertError] = useState<string | null>(null);
+  const [isCameraOpen, setIsCameraOpen] = useState(false);
 
   const handlePhotoUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -113,6 +115,29 @@ export const PfpFrameEditor: React.FC<PfpFrameEditorProps> = ({ builder, setBuil
               onChange={handlePhotoUpload}
             />
           </div>
+
+          <button
+            type="button"
+            onClick={() => setIsCameraOpen(true)}
+            className="w-full py-3 px-4 bg-[#023D23] hover:bg-[#012515] text-[#FFE600] rounded-xl font-mono font-bold text-xs uppercase flex items-center justify-center gap-2 cursor-pointer transition-colors shadow-sm"
+          >
+            <Camera className="w-4 h-4 text-[#FFE600]" />
+            <span>USE LIVE DEVICE CAMERA</span>
+          </button>
+
+          <CameraModal
+            isOpen={isCameraOpen}
+            onClose={() => setIsCameraOpen(false)}
+            onCapture={(capturedDataUrl) => {
+              setBuilder((prev) => ({
+                ...prev,
+                photoUrl: capturedDataUrl,
+                zoom: 1,
+                panX: 0,
+                panY: 0,
+              }));
+            }}
+          />
 
           {/* Photo Adjust Controls */}
           <div className="w-full space-y-2.5 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm">

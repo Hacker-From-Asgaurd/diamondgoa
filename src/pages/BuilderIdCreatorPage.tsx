@@ -6,8 +6,9 @@ import { LivePreview } from '../components/LivePreview';
 import { BuilderData } from '../types';
 import { INITIAL_BUILDER_DATA } from '../utils/defaultData';
 import { generateRandomBuilderId } from '../utils/shareHelpers';
-import { Upload, User, Briefcase, RefreshCw, ZoomIn } from 'lucide-react';
+import { Upload, User, Briefcase, RefreshCw, ZoomIn, Camera } from 'lucide-react';
 import { handleInstantImageUpload, isHeic } from '../utils/imageUtils';
+import { CameraModal } from '../components/CameraModal';
 
 export const BuilderIdCreatorPage: React.FC = () => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ export const BuilderIdCreatorPage: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isConverting, setIsConverting] = useState(false);
   const [convertError, setConvertError] = useState<string | null>(null);
+  const [isCameraOpen, setIsCameraOpen] = useState(false);
   const conversionToken = useRef(0);
 
   const handlePhotoUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -136,6 +138,29 @@ export const BuilderIdCreatorPage: React.FC = () => {
                       onChange={handlePhotoUpload}
                     />
                   </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setIsCameraOpen(true)}
+                    className="w-full py-2.5 px-4 bg-[#023D23] hover:bg-[#012515] text-[#FFE600] rounded-xl font-mono font-bold text-xs uppercase flex items-center justify-center gap-2 cursor-pointer transition-colors shadow-sm"
+                  >
+                    <Camera className="w-4 h-4 text-[#FFE600]" />
+                    <span>USE LIVE DEVICE CAMERA</span>
+                  </button>
+
+                  <CameraModal
+                    isOpen={isCameraOpen}
+                    onClose={() => setIsCameraOpen(false)}
+                    onCapture={(capturedDataUrl) => {
+                      setBuilder(prev => ({
+                        ...prev,
+                        photoUrl: capturedDataUrl,
+                        zoom: 1,
+                        panX: 0,
+                        panY: 0,
+                      }));
+                    }}
+                  />
 
                   {/* Photo Zoom & Pan Position Controls */}
                   <div className="w-full space-y-2 bg-white p-2.5 rounded-xl border border-slate-200 shadow-2xs flex flex-col justify-between">
