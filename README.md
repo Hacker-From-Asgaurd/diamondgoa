@@ -215,19 +215,6 @@ generic AI dashboard.
 
 ------------------------------------------------------------------------
 
-## 📸 Screenshots
-
-Add real screenshots of the final product here.
-
-Recommended: 1. Landing page 2. Identity format selection 3. Builder ID
-creator 4. PFP frame editor 5. Final generated identity 6. Mobile
-responsive view
-
-> Use screenshots from the running product rather than mockups. The
-> visual experience is one of the strongest parts of this project.
-
-------------------------------------------------------------------------
-
 ## 🚀 Future Improvements
 
 -   Save and restore generated identities
